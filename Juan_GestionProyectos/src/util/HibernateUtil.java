@@ -6,22 +6,21 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
-    private static SessionFactory buildSessionFactory()
+    private static SessionFactory buildSessionFactory() throws Exception
     {
         try {
             return new Configuration().configure().buildSessionFactory(
                     new StandardServiceRegistryBuilder().configure().build ());
         }
-        catch (Throwable ex)
+        catch (Exception ex)
         {
             System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+            throw new Exception(ex);
         }
     }
-    public static SessionFactory getSessionFactory()
+    public static SessionFactory getSessionFactory() throws Exception
     {
-        return sessionFactory;
+        return buildSessionFactory();
     }
 
 }
