@@ -21,6 +21,7 @@ public class Main {
     public static VCrearProyecto vCrearProyecto;
     public static VMantenimientoProyectos vMantProyectos;
     public static VRegistrarGestion vRegistrarGestion;
+    public static VMantenimientoGestiones vMantGestiones;
     
     public static void main(String[] args) {
         try{
@@ -188,6 +189,42 @@ public class Main {
         vRegistrarGestion.dispose();
         vPrincipal = new VPrincipal();
         vPrincipal.setVisible(true);
+    }
+    
+    public static void abrirMantenimientoGestiones(){
+        vMantGestiones = new VMantenimientoGestiones();
+        vMantGestiones.setVisible(true);
+        vPrincipal.setVisible(false);
+        vPrincipal.dispose();
+    }
+    
+    public static void cerrarMantenimientoGestiones(){
+        vPrincipal = new VPrincipal();
+        vPrincipal.setVisible(true);
+        vMantGestiones.setVisible(false);
+        vMantGestiones.dispose();
+    }
+    
+    public static void abrirModificarGestion(Gestion ges){
+        try{
+            vCargando.setVisible(true);
+            List<Proveedores> proveedores = BD_PROVEEDORES.getAllProveedores();
+            List<Proyectos> proyectos = BD_PROYECTOS.getAllProyectos();
+            List<Piezas> piezas = BD_PIEZAS.getAllPiezas();
+            if(proveedores == null || proyectos == null || piezas == null){
+                throw new Exception();
+            }
+            vRegistrarGestion = new VRegistrarGestion(1,ges,piezas,proveedores,proyectos);
+            vRegistrarGestion.setVisible(true);
+            vPrincipal.setVisible(false);
+            vPrincipal.dispose();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al abrir la ventana. Intentalo de nuevo.","",JOptionPane.ERROR_MESSAGE);
+        }finally{
+            if(vCargando != null){
+                vCargando.setVisible(false);
+            }
+        }
     }
     
     public static Response insertarProveedor(Proveedores prov){

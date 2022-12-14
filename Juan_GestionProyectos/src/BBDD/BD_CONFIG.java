@@ -82,7 +82,6 @@ public class BD_CONFIG {
         StringBuilder sSql = new StringBuilder();
         sSql.append("create table if not exists gestion( ");
         sSql.append("id int primary key auto_increment, ");
-        sSql.append("NOMBRE	VARCHAR(20) NOT NULL, ");
         sSql.append("CANTIDAD DECIMAL not NULL, ");
         sSql.append("CODPROVEEDOR VARCHAR(6), ");
         sSql.append("CODPIEZA VARCHAR(6) NOT	 NULL, ");

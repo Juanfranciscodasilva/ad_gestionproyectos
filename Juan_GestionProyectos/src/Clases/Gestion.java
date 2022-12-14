@@ -9,7 +9,7 @@ public class Gestion {
     @Column(name = "ID", nullable = false)
     private int id;
     @Basic
-    @Column(name = "CANTIDAD", nullable = true, precision = 0)
+    @Column(name = "CANTIDAD", nullable = false, precision = 0)
     private Integer cantidad;
     @ManyToOne
     @JoinColumn(name = "CODPROVEEDOR", referencedColumnName = "CODIGO", nullable = false)

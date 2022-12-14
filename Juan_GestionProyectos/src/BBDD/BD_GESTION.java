@@ -23,6 +23,7 @@ public class BD_GESTION {
             sesion.save(ges);
             tx.commit();
         }catch(Exception ex){
+           ex.printStackTrace();
             response.setCorrecto(false);
             response.setMensajeError("Ha ocurrido un error al registrar la gestión");
         }finally{

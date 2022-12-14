@@ -170,7 +170,7 @@ public class VPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_NuevoEspectaculoActionPerformed
 
     private void ModificarEspectaculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarEspectaculoActionPerformed
-//        Main.abrirVMEEspectaculo(1);
+        Main.abrirMantenimientoGestiones();
     }//GEN-LAST:event_ModificarEspectaculoActionPerformed
 
     private void ModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarClienteActionPerformed

@@ -9,7 +9,7 @@
             <column name="ID" sql-type="int"/>
         </id>
         <property name="cantidad">
-            <column name="CANTIDAD" sql-type="decimal(10)" precision="10" not-null="true"/>
+            <column name="CANTIDAD" sql-type="decimal(10)" precision="10"/>
         </property>
         <many-to-one name="proveedoresByCodproveedor" class="Clases.Proveedores">
             <column name="CODPROVEEDOR"/>
