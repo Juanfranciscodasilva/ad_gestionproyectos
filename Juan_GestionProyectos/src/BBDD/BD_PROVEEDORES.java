@@ -146,4 +146,49 @@ public class BD_PROVEEDORES {
         }
     }
     
+    public static List<Proveedores> buscarProveedoresConGestiones(String codigo, String nombre, String apellidos, String direccion){
+        Session sesion = null;
+        try{
+            SessionFactory sesionFactory = HibernateUtil.getSessionFactory();
+            sesion = sesionFactory.openSession();
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT DISTINCT p FROM Proveedores p ");
+            query.append("left join fetch p.gestionsByCodigo Gestion ");
+            query.append("left join fetch Gestion.proyectosByCodproyecto Proyecto ");
+            query.append("WHERE 1=1 ");
+            if(!codigo.isBlank()){
+                query.append(" AND p.codigo = :codigo ");
+            }
+            if(!nombre.isBlank()){
+                query.append(" AND p.nombre = :nombre ");
+            }
+            if(!apellidos.isBlank()){
+                query.append(" AND p.apellidos = :apellidos ");
+            }
+            if(!direccion.isBlank()){
+                query.append(" AND p.direccion = :direccion ");
+            }
+            Query q = sesion.createQuery(query.toString());
+            if(!codigo.isBlank()){
+                q.setParameter("codigo", codigo);
+            }
+            if(!nombre.isBlank()){
+                q.setParameter("nombre", nombre);
+            }
+            if(!apellidos.isBlank()){
+                q.setParameter("apellidos", apellidos);
+            }
+            if(!direccion.isBlank()){
+                q.setParameter("direccion", direccion);
+            }
+            return q.list();
+        }catch(Exception ex){
+            return null;
+        }finally{
+            if(sesion != null && sesion.isOpen()){
+                sesion.close();
+            }
+        }
+    }
+    
 }
