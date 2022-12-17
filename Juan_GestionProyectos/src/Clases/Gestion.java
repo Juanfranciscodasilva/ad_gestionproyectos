@@ -11,13 +11,13 @@ public class Gestion {
     @Basic
     @Column(name = "CANTIDAD", nullable = false, precision = 0)
     private Integer cantidad;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CODPROVEEDOR", referencedColumnName = "CODIGO", nullable = false)
     private Proveedores proveedoresByCodproveedor;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CODPIEZA", referencedColumnName = "CODIGO", nullable = false)
     private Piezas piezasByCodpieza;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CODPROYECTO", referencedColumnName = "CODIGO", nullable = false)
     private Proyectos proyectosByCodproyecto;
 
@@ -59,5 +59,14 @@ public class Gestion {
 
     public void setProyectosByCodproyecto(Proyectos proyectosByCodproyecto) {
         this.proyectosByCodproyecto = proyectosByCodproyecto;
+    }
+    
+    public String toString2(){
+        StringBuilder text = new StringBuilder();
+        text.append("Pieza: "+(this.piezasByCodpieza == null ? " --- ":this.piezasByCodpieza.getCodigo())+", ");
+        text.append("Cantidad: "+this.cantidad+", ");
+        text.append("Proveedor: "+(this.proveedoresByCodproveedor == null ? " --- ":this.proveedoresByCodproveedor.getCodigo())+", ");
+        text.append("Proyecto: "+(this.proyectosByCodproyecto == null ? " --- ":this.proyectosByCodproyecto.getCodigo()));
+        return text.toString();
     }
 }

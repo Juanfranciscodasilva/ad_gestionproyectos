@@ -1,6 +1,7 @@
 package Ventanas;
 
 import Clases.Gestion;
+import Clases.Response;
 import Main.Main;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,8 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
         tCodigoProveedor = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         tCantidad = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        cbGestion = new javax.swing.JComboBox<>();
         lEncontrados = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -217,7 +220,7 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(tPrecioPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Proyecto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 18))); // NOI18N
@@ -330,6 +333,16 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
 
         jLabel16.setText("Cantidad:");
 
+        tCantidad.setEditable(false);
+
+        jLabel17.setText("Código");
+
+        cbGestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbGestionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -339,42 +352,49 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addContainerGap()))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbGestion, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(320, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
+                    .addComponent(cbGestion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16)
-                        .addComponent(tCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(63, Short.MAX_VALUE)))
         );
 
         lEncontrados.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -388,17 +408,18 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
             .addComponent(eTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lEncontrados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(165, 165, 165)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(165, 165, 165)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(356, 356, 356)
+                        .addComponent(bVolver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(356, 356, 356)
-                .addComponent(bVolver)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -409,10 +430,10 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lEncontrados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -423,41 +444,21 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
     }//GEN-LAST:event_bVolverActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
-//        if(this.opcion==0){
-//            if(e.getListaEspectaculos() != null && !e.getListaEspectaculos().isEmpty()){
-//                JOptionPane.showMessageDialog(null, "Este empleado tiene espectáculos a cargo, reemplácelo antes de dar de baja.","", JOptionPane.WARNING_MESSAGE);
-//                return;
-//            }
-//            int eleccion = JOptionPane.showConfirmDialog(null, "Se va a dar de baja el empleado ¿Prefieres dar de baja eliminando completamente al empleado? ", "Dar de baja o eliminar completamente", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-//            if(eleccion == 0){
-//                Response respuesta = Main.eliminarEmpleado(e); 
-//                if(respuesta != null){
-//                    if(!respuesta.isCorrecto()){
-//                        JOptionPane.showMessageDialog(null, respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
-//                    }else{
-//                        JOptionPane.showMessageDialog(null, "Se ha eliminado el empleado correctamente.");
-//                        Main.cerrarVMEEmpleado();
-//                    }
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Vuelve a intentarlo.","", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }else if(eleccion == 1){
-//                e.setBaja(true);
-//                Response respuesta = Main.modificarEmpleado(e); 
-//                if(respuesta != null){
-//                    if(!respuesta.isCorrecto()){
-//                        JOptionPane.showMessageDialog(null,respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
-//                    }else{
-//                        JOptionPane.showMessageDialog(null, "Se ha dado de baja el empleado correctamente.");
-//                        Main.cerrarVMEEmpleado();
-//                    }
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Vuelve a intentarlo.","", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//        }else if(opcion==1){
-//            Main.abrirModificarEmpleado(e);
-//        }
+        if(this.g != null){
+            if(JOptionPane.showConfirmDialog(null,"Está seguro de querer eliminar la gestión?")==0){
+                Response respuesta = Main.eliminarGestion(g);
+                if(respuesta != null){
+                    if(!respuesta.isCorrecto()){
+                        JOptionPane.showMessageDialog(null,respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado la gestión correctamente.");
+                        Main.cerrarMantenimientoGestiones();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Vuelve a intentarlo.","", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_bEliminarActionPerformed
 
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
@@ -465,22 +466,23 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
     }//GEN-LAST:event_bModificarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
-//        String codigo = tCodigoPiezaFiltro.getText().trim().replaceAll(" ", "");
-//        String nombre = tCodigoProveedorFiltro.getText().trim();
-//        String precioString = tCodigoProyectoFiltro.getText().trim();
-//        if(!codigo.isBlank() || !nombre.isBlank() || !precioString.isBlank()){
-//            try{
-//                int precio = precioString.isBlank() ? -1:Integer.parseInt(precioString);
-//                this.listaPiezas = Main.buscarPiezas(codigo,nombre,precio);
-//                if(listaPiezas == null){
-//                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al buscar las piezas.","",JOptionPane.ERROR_MESSAGE);
-//                }
-//                rellenarComboPiezas();
-//                actualizarEtiquetaEncontrados();
-//            }catch(Exception ex){
-//                JOptionPane.showMessageDialog(null, "Introduce un precio válido.","", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
+        String codigoPieza = tCodigoPiezaFiltro.getText().trim().replaceAll(" ", "");
+        String codigoProveedor = tCodigoProveedorFiltro.getText().trim().replaceAll(" ", "");
+        String codigoProyecto = tCodigoProyectoFiltro.getText().trim().replaceAll(" ", "");
+        String cantidadString = tCantidadFiltro.getText().trim();
+        if(!codigoPieza.isBlank() || !codigoProveedor.isBlank() || !codigoProyecto.isBlank() || !cantidadString.isBlank()){
+            try{
+                int cantidad = cantidadString.isBlank() ? -1:Integer.parseInt(cantidadString);
+                this.listaGestiones = Main.buscarGestiones(codigoPieza,codigoProveedor,codigoProyecto,cantidad);
+                if(listaGestiones == null){
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al buscar las gestiones.","",JOptionPane.ERROR_MESSAGE);
+                }
+                rellenarComboGestiones();
+                actualizarEtiquetaEncontrados();
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, "Introduce una cantidad válido.","", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_bBuscarActionPerformed
 
     private void bLimpiarFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimpiarFiltroActionPerformed
@@ -492,6 +494,24 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
         rellenarComboGestiones();
         actualizarEtiquetaEncontrados();
     }//GEN-LAST:event_bLimpiarFiltroActionPerformed
+
+    private void cbGestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbGestionActionPerformed
+        int index = cbGestion.getSelectedIndex()-1;
+        Gestion gestion = null;
+        if(index > -1){
+            gestion = this.listaGestiones.get(index);
+        }
+        if(gestion == null){
+            LimpiarCampos();
+            bEliminar.setEnabled(false);
+            bModificar.setEnabled(false);
+        }else{
+            this.g = gestion;
+            AutocompletarDatos();
+            bEliminar.setEnabled(true);
+            bModificar.setEnabled(true);
+        }
+    }//GEN-LAST:event_cbGestionActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -781,17 +801,17 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
     }
     
     public void rellenarComboGestiones(){
-//        cbCodigo.removeAllItems();
-//        if(this.listaPiezas != null && !this.listaPiezas.isEmpty()){
-//             cbCodigo.addItem("-----Elegir piezas-----");
-//            try{
-//                for(Piezas pi : this.listaPiezas){
-//                    cbCodigo.addItem(pi.getCodigo());
-//                }
-//            }catch(Exception e){
-//                System.out.println("ha ocurrido un error "+ e.getMessage());
-//            } 
-//        }
+        cbGestion.removeAllItems();
+        if(this.listaGestiones != null && !this.listaGestiones.isEmpty()){
+             cbGestion.addItem("-----Elegir gestión-----");
+            try{
+                for(Gestion g : this.listaGestiones){
+                    cbGestion.addItem(g.toString2());
+                }
+            }catch(Exception e){
+                System.out.println("ha ocurrido un error "+ e.getMessage());
+            } 
+        }
     }
     
     public void actualizarEtiquetaEncontrados(){
@@ -803,15 +823,39 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
     }
     
     public void LimpiarCampos(){
-//        tNombre.setText("");
-//        tPrecio.setText("");
-//        tDescripcion.setText("");
+        //limpiar pieza
+        tCodigoPieza.setText("");
+        tNombrePieza.setText("");
+        tPrecioPieza.setText("");
+        //limpiar proveedor
+        tCodigoProveedor.setText("");
+        tNombreProveedor.setText("");
+        tApellidosProveedor.setText("");
+        tDireccionProveedor.setText("");
+        //limpiar proyecto
+        tCodigoProyecto.setText("");
+        tNombreProyecto.setText("");
+        tCiudadProyecto.setText("");
+        //limpiar cantidad
+        tCantidad.setText("");
     }
     
     public void AutocompletarDatos(){
-//        tNombre.setText(p.getNombre());
-//        tPrecio.setText(String.valueOf(p.getPrecio()));
-//        tDescripcion.setText(p.getDescripcion());
+        //rellenar pieza
+        tCodigoPieza.setText(this.g.getPiezasByCodpieza().getCodigo());
+        tNombrePieza.setText(this.g.getPiezasByCodpieza().getNombre());
+        tPrecioPieza.setText(String.valueOf(this.g.getPiezasByCodpieza().getPrecio()));
+        //rellenar proveedor
+        tCodigoProveedor.setText(this.g.getProveedoresByCodproveedor().getCodigo());
+        tNombreProveedor.setText(this.g.getProveedoresByCodproveedor().getNombre());
+        tApellidosProveedor.setText(this.g.getProveedoresByCodproveedor().getApellidos());
+        tDireccionProveedor.setText(this.g.getProveedoresByCodproveedor().getDireccion());
+        //rellenar proyecto
+        tCodigoProyecto.setText(this.g.getProyectosByCodproyecto().getCodigo());
+        tNombreProyecto.setText(this.g.getProyectosByCodproyecto().getNombre());
+        tCiudadProyecto.setText(this.g.getProyectosByCodproyecto().getCiudad());
+        //rellenar cantidad
+        tCantidad.setText(String.valueOf(this.g.getCantidad()));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -820,6 +864,7 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
     private javax.swing.JButton bLimpiarFiltro;
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bVolver;
+    private javax.swing.JComboBox<String> cbGestion;
     private javax.swing.JLabel eTitulo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -828,6 +873,7 @@ public class VMantenimientoGestiones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

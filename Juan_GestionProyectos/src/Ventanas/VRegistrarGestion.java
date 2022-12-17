@@ -5,6 +5,7 @@ import Clases.Response;
 import Main.Main;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import javax.swing.JOptionPane;
 
 public class VRegistrarGestion extends javax.swing.JFrame {
@@ -38,13 +39,17 @@ public class VRegistrarGestion extends javax.swing.JFrame {
         this.listaProveedores = listaProveedores;
         this.listaProyectos = listaProyectos;
         RellenarCombos();
+        AdaptarVentanaOpcion();
+        if(this.gestion != null){
+            AutocompletarDatos();
+        }
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        tTitulo = new javax.swing.JLabel();
         bRegistrar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -76,9 +81,9 @@ public class VRegistrarGestion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Registrar gestión");
+        tTitulo.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        tTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tTitulo.setText("Registrar gestión");
 
         bRegistrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         bRegistrar.setText("Registrar");
@@ -275,17 +280,16 @@ public class VRegistrarGestion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+            .addComponent(tTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
@@ -305,7 +309,7 @@ public class VRegistrarGestion extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(tTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -327,28 +331,38 @@ public class VRegistrarGestion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
-        Main.cerrarRegistrarGestion();
+        Main.cerrarRegistrarGestion(this.opcion);
     }//GEN-LAST:event_bCancelarActionPerformed
 
     private void bRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistrarActionPerformed
         if(this.piezaSeleccionada != null && this.proveedorSeleccionado != null && this.proyectoSeleccionado != null){
             if(validarDatos()){
                 Response respuesta = null;
-                Gestion gestion = new Gestion();
-                gestion.setPiezasByCodpieza(piezaSeleccionada);
-                gestion.setProveedoresByCodproveedor(proveedorSeleccionado);
-                gestion.setProyectosByCodproyecto(proyectoSeleccionado);
-                gestion.setCantidad(Integer.parseInt(tCantidad.getText()));
-                respuesta = Main.insertarGestion(gestion);
-                if(respuesta != null){
+                Gestion g = new Gestion();
+                g.setPiezasByCodpieza(piezaSeleccionada);
+                g.setProveedoresByCodproveedor(proveedorSeleccionado);
+                g.setProyectosByCodproyecto(proyectoSeleccionado);
+                g.setCantidad(Integer.parseInt(tCantidad.getText()));
+                if(this.opcion == 1){
+                g.setId(this.gestion.getId());
+                respuesta = Main.modificarGestion(g);
+                if(respuesta.isCorrecto()){
+                    JOptionPane.showMessageDialog(null, "Se ha modificado la gestión correctamente.");
+                }
+                }else{
+                    respuesta = Main.insertarGestion(g);
                     if(respuesta.isCorrecto()){
                         JOptionPane.showMessageDialog(null, "Se ha registrado la gestión correctamente.");
-                        Main.cerrarRegistrarGestion();
+                    }
+                }
+                if(respuesta != null){
+                    if(!respuesta.isCorrecto()){
+                        JOptionPane.showMessageDialog(null,respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
                     }else{
-                        JOptionPane.showMessageDialog(null, respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
+                        Main.cerrarRegistrarGestion(this.opcion);
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Intenalo de nuevo.","", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Vuelve a intentarlo.","", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }else{
@@ -546,6 +560,47 @@ public class VRegistrarGestion extends javax.swing.JFrame {
              return false;
          }
      }
+    
+    public void AdaptarVentanaOpcion(){
+        if(this.opcion == 0){
+            bRegistrar.setText("Registrar");
+            tTitulo.setText("Registrar gestión");
+        }else{
+            bRegistrar.setText("Modificar");
+            tTitulo.setText("Modificar gestión");
+        }
+    }
+    
+    public void AutocompletarDatos(){
+        //Autocompletar pieza
+        if(this.gestion.getPiezasByCodpieza() != null){
+            int index = IntStream.range(0, listaPiezas.size())
+                        .filter(i -> listaPiezas.get(i).getCodigo().equalsIgnoreCase(this.gestion.getPiezasByCodpieza().getCodigo()))
+                        .findFirst().orElse(-1);
+            if(index != -1){
+                cbCodigoPieza.setSelectedIndex(index+1);
+            }
+        }
+        //Autocompletar proveedor
+        if(this.gestion.getProveedoresByCodproveedor() != null){
+            int index = IntStream.range(0, listaProveedores.size())
+                        .filter(i -> listaProveedores.get(i).getCodigo().equalsIgnoreCase(this.gestion.getProveedoresByCodproveedor().getCodigo()))
+                        .findFirst().orElse(-1);
+            if(index != -1){
+                cbCodigoProveedor.setSelectedIndex(index+1);
+            }
+        }
+        //Autocompletar proyecto
+        if(this.gestion.getProyectosByCodproyecto() != null){
+            int index = IntStream.range(0, listaProyectos.size())
+                        .filter(i -> listaProyectos.get(i).getCodigo().equalsIgnoreCase(this.gestion.getProyectosByCodproyecto().getCodigo()))
+                        .findFirst().orElse(-1);
+            if(index != -1){
+                cbCodigoProyecto.setSelectedIndex(index+1);
+            }
+        }
+        tCantidad.setText(String.valueOf(this.gestion.getCantidad()));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel NoCantidad;
@@ -554,7 +609,6 @@ public class VRegistrarGestion extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbCodigoPieza;
     private javax.swing.JComboBox<String> cbCodigoProveedor;
     private javax.swing.JComboBox<String> cbCodigoProyecto;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -577,5 +631,6 @@ public class VRegistrarGestion extends javax.swing.JFrame {
     private javax.swing.JTextField tNombreProveedor;
     private javax.swing.JTextField tNombreProyecto;
     private javax.swing.JTextField tPrecioPieza;
+    private javax.swing.JLabel tTitulo;
     // End of variables declaration//GEN-END:variables
 }

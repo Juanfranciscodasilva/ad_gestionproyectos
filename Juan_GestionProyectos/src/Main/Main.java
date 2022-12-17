@@ -184,11 +184,15 @@ public class Main {
         }
     }
     
-    public static void cerrarRegistrarGestion(){
+    public static void cerrarRegistrarGestion(int opcion){
         vRegistrarGestion.setVisible(false);
         vRegistrarGestion.dispose();
-        vPrincipal = new VPrincipal();
-        vPrincipal.setVisible(true);
+        if(opcion==1){
+            abrirMantenimientoGestiones();
+        }else{
+            vPrincipal = new VPrincipal();
+            vPrincipal.setVisible(true);
+        }
     }
     
     public static void abrirMantenimientoGestiones(){
@@ -216,8 +220,8 @@ public class Main {
             }
             vRegistrarGestion = new VRegistrarGestion(1,ges,piezas,proveedores,proyectos);
             vRegistrarGestion.setVisible(true);
-            vPrincipal.setVisible(false);
-            vPrincipal.dispose();
+            vMantGestiones.setVisible(false);
+            vMantGestiones.dispose();
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al abrir la ventana. Intentalo de nuevo.","",JOptionPane.ERROR_MESSAGE);
         }finally{
@@ -304,6 +308,30 @@ public class Main {
            return BD_GESTION.insertarGestion(gestion);
         }catch(Exception ex){
             return new Response(false,"Ha ocurrido un error al insertar la gestión");
+        }
+    }
+    
+    public static Response modificarGestion(Gestion gestion){
+        try{
+            return BD_GESTION.modificarGestion(gestion);
+        }catch(Exception ex){
+            return new Response(false,"Ha ocurrido un error al modificar la gestión");
+        }
+    }
+    
+    public static Response eliminarGestion(Gestion g){
+        try{
+            return BD_GESTION.eliminarGestion(g);
+        }catch(Exception ex){
+            return new Response(false,"Ha ocurrido un error al eliminar la gestión");
+        }
+    }
+    
+    public static List<Gestion> buscarGestiones(String codPieza, String codProveedor, String codProyecto, int cantidad){
+        try{
+            return BD_GESTION.buscarGestiones(codPieza, codProveedor, codProyecto, cantidad);
+        }catch(Exception ex){
+            return null;
         }
     }
     
