@@ -140,4 +140,44 @@ public class BD_PIEZAS {
         }
     }
     
+    public static List<Piezas> buscarPiezasConGestiones(String codigo, String nombre, int precio){
+        Session sesion = null;
+        try{
+            SessionFactory sesionFactory = HibernateUtil.getSessionFactory();
+            sesion = sesionFactory.openSession();
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT DISTINCT p FROM Piezas p ");
+            query.append("left join fetch p.gestionsByCodigo Gestion ");
+            query.append("left join fetch Gestion.proveedoresByCodproveedor Proveedor ");
+            query.append("left join fetch Gestion.proyectosByCodproyecto Proyecto ");
+            query.append("WHERE 1=1 ");
+            if(!codigo.isBlank()){
+                query.append(" AND p.codigo = :codigo ");
+            }
+            if(!nombre.isBlank()){
+                query.append(" AND p.nombre = :nombre ");
+            }
+            if(precio != -1){
+                query.append(" AND p.precio = :precio ");
+            }
+            Query q = sesion.createQuery(query.toString());
+            if(!codigo.isBlank()){
+                q.setParameter("codigo", codigo);
+            }
+            if(!nombre.isBlank()){
+                q.setParameter("nombre", nombre);
+            }
+            if(precio != -1){
+                q.setParameter("precio", precio);
+            }
+            return q.list();
+        }catch(Exception ex){
+            return null;
+        }finally{
+            if(sesion != null && sesion.isOpen()){
+                sesion.close();
+            }
+        }
+    }
+    
 }
