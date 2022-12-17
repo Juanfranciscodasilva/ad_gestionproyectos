@@ -142,4 +142,43 @@ public class BD_PROYECTOS {
         }
     }
     
+    public static List<Proyectos> buscarProyectosConGestiones(String codigo, String nombre, String ciudad){
+        Session sesion = null;
+        try{
+            SessionFactory sesionFactory = HibernateUtil.getSessionFactory();
+            sesion = sesionFactory.openSession();
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT DISTINCT p FROM Proyectos p ");
+            query.append("left join fetch p.gestionsByCodigo Gestion ");
+            query.append("left join fetch Gestion.proveedoresByCodproveedor Proveedor ");
+            query.append("WHERE 1=1 ");
+            if(!codigo.isBlank()){
+                query.append(" AND p.codigo = :codigo ");
+            }
+            if(!nombre.isBlank()){
+                query.append(" AND p.nombre = :nombre ");
+            }
+            if(!ciudad.isBlank()){
+                query.append(" AND p.ciudad = :ciudad ");
+            }
+            Query q = sesion.createQuery(query.toString());
+            if(!codigo.isBlank()){
+                q.setParameter("codigo", codigo);
+            }
+            if(!nombre.isBlank()){
+                q.setParameter("nombre", nombre);
+            }
+            if(!ciudad.isBlank()){
+                q.setParameter("ciudad", ciudad);
+            }
+            return q.list();
+        }catch(Exception ex){
+            return null;
+        }finally{
+            if(sesion != null && sesion.isOpen()){
+                sesion.close();
+            }
+        }
+    }
+    
 }

@@ -25,6 +25,7 @@ public class Main {
     public static VRegistrarGestion vRegistrarGestion;
     public static VMantenimientoGestiones vMantGestiones;
     public static VEstadisticasProveedores vEstadisticasProveedores;
+    public static VEstadisticasProyectos vEstadisticasProyectos;
     
     public static void main(String[] args) {
         try{
@@ -260,6 +261,32 @@ public class Main {
         vEstadisticasProveedores.dispose();
     }
     
+    public static void abrirEstadisticasProyectos(){
+        try{
+            vCargando.setVisible(true);
+            EstadisticasProyectos masPiezasSuministradas = ProyectoConMasPiezasSuministradas();
+            EstadisticasProyectos masProveedores = ProyectoConMasProveedores();
+            EstadisticasProyectos masGestiones = ProyectoConMasGestiones();
+            vEstadisticasProyectos = new VEstadisticasProyectos(masPiezasSuministradas,masProveedores,masGestiones);
+            vEstadisticasProyectos.setVisible(true);
+            vPrincipal.setVisible(false);
+            vPrincipal.dispose();
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al abrir la ventana. Intentalo de nuevo.","",JOptionPane.ERROR_MESSAGE);
+        }finally{
+            if(vCargando != null){
+                vCargando.setVisible(false);
+            }
+        }
+    }
+    
+    public static void cerrarEstadisticasProyectos(){
+        vPrincipal = new VPrincipal();
+        vPrincipal.setVisible(true);
+        vEstadisticasProyectos.setVisible(false);
+        vEstadisticasProyectos.dispose();
+    }
+    
     public static EstadisticasProveedor ProveedorConMasPiezasSuministradas() throws Exception{
         EstadisticasProveedor prov = null;
         try{
@@ -378,6 +405,122 @@ public class Main {
         }
     }
     
+    public static EstadisticasProyectos ProyectoConMasPiezasSuministradas() throws Exception{
+        EstadisticasProyectos pro = null;
+        try{
+            List<Gestion> gestiones = buscarGestiones("", "", "", -1);
+            Map<String, Integer> map = new HashMap<String, Integer>();
+            for(Gestion g : gestiones){
+                int valor = 0;
+                String clave = g.getProyectosByCodproyecto().getCodigo();
+                if(map.containsKey(clave)){
+                    valor = map.get(clave);
+                }
+                valor += g.getCantidad();
+                map.put(clave, valor);
+            }
+            String codigo = "";
+            int cantidadPiezas = 0;
+            for(Map.Entry<String,Integer> entry : map.entrySet()){
+                if(entry.getValue() > cantidadPiezas){
+                    codigo = entry.getKey();
+                    cantidadPiezas = entry.getValue();
+                }
+            }
+            if(!codigo.isBlank() && cantidadPiezas != 0){
+                pro = new EstadisticasProyectos();
+                pro.setCodigo(codigo);
+                pro.setNumeroPiezas(cantidadPiezas);
+            }
+            return pro;
+        }catch(Exception ex){
+            throw ex;
+        }
+    }
+    
+    public static EstadisticasProyectos ProyectoConMasProveedores() throws Exception{
+        EstadisticasProyectos pro = null;
+        try{
+            List<Proyectos> proyectos = buscarProyectosConGestiones("", "", "");
+            Map<String, Integer> map = new HashMap<String, Integer>();
+            for(Proyectos p : proyectos){
+                String clave = p.getCodigo();
+                List<String> proveedores = new ArrayList<>();
+                for(Gestion g : p.getGestionsByCodigo()){
+                    if(!proveedores.contains(g.getProveedoresByCodproveedor().getCodigo())){
+                        proveedores.add(g.getProveedoresByCodproveedor().getCodigo());
+                    }
+                }
+                map.put(clave, proyectos.size());
+            }
+            String codigo = "";
+            int cantidadProveedores = 0;
+            for(Map.Entry<String,Integer> entry : map.entrySet()){
+                if(entry.getValue() > cantidadProveedores){
+                    codigo = entry.getKey();
+                    cantidadProveedores = entry.getValue();
+                }
+            }
+            if(!codigo.isBlank() && cantidadProveedores != 0){
+                pro = new EstadisticasProyectos();
+                pro.setCodigo(codigo);
+                pro.setNumeroProveedores(cantidadProveedores);
+            }
+            return pro;
+        }catch(Exception ex){
+            throw ex;
+        }
+    }
+    
+    public static EstadisticasProyectos ProyectoConMasGestiones() throws Exception{
+        EstadisticasProyectos pro = null;
+        try{
+            List<Proyectos> proyectos = buscarProyectosConGestiones("", "", "");
+            Proyectos proConMasGestiones = null;
+            for(Proyectos p : proyectos){
+                if(proConMasGestiones == null || p.getGestionsByCodigo().size() > proConMasGestiones.getGestionsByCodigo().size()){
+                    proConMasGestiones = p;
+                }
+            }
+            if(proConMasGestiones != null){
+                pro = new EstadisticasProyectos();
+                pro.setCodigo(proConMasGestiones.getCodigo());
+                pro.setNumeroGestiones(proConMasGestiones.getGestionsByCodigo().size());
+            }
+            return pro;
+        }catch(Exception ex){
+            throw ex;
+        }
+    }
+    
+    public static List<EstadisticasProyectos> buscarEstadisticasProyectos(String codigo, String nombre, String ciudad){
+        try{
+            List<Proyectos> proyectos = BD_PROYECTOS.buscarProyectosConGestiones(codigo, nombre, ciudad);
+            List<EstadisticasProyectos> estadisticas = new ArrayList<>();
+            for(Proyectos p : proyectos){
+                EstadisticasProyectos estat = new EstadisticasProyectos();
+                estat.setCodigo(p.getCodigo());
+                estat.setNombre(p.getNombre());
+                estat.setCiudad(p.getCiudad());
+                estat.setNumeroGestiones(p.getGestionsByCodigo().size());
+                List<String> proveedores = new ArrayList<>();
+                int numeroPiezas = 0;
+                for(Gestion g : p.getGestionsByCodigo()){
+                    if(!proveedores.contains(g.getProveedoresByCodproveedor().getCodigo())){
+                        proveedores.add(g.getProveedoresByCodproveedor().getCodigo());
+                    }
+                    numeroPiezas += g.getCantidad();
+                }
+                estat.setNumeroProveedores(proveedores.size());
+                estat.setNumeroPiezas(numeroPiezas);
+                estadisticas.add(estat);
+            }
+            return estadisticas;
+        }catch(Exception ex){
+            return null;
+        }
+    }
+    
     public static Response insertarProveedor(Proveedores prov){
         try{
            return BD_PROVEEDORES.insertarProveedor(prov); 
@@ -477,6 +620,14 @@ public class Main {
     public static List<Proyectos> buscarProyectos(String codigo, String nombre, String ciudad){
         try{
             return BD_PROYECTOS.buscarProyectos(codigo, nombre, ciudad);
+        }catch(Exception ex){
+            return null;
+        }
+    }
+    
+    public static List<Proyectos> buscarProyectosConGestiones(String codigo, String nombre, String ciudad){
+        try{
+            return BD_PROYECTOS.buscarProyectosConGestiones(codigo, nombre, ciudad);
         }catch(Exception ex){
             return null;
         }
