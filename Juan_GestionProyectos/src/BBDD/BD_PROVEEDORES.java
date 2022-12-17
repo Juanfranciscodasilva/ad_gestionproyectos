@@ -59,6 +59,33 @@ public class BD_PROVEEDORES {
         return response;
     }
     
+    public static Response eliminarProveedor(Proveedores prov){
+        Response response = new Response();
+        Session sesion = null;
+        try{
+            SessionFactory sesionFactory = HibernateUtil.getSessionFactory();
+            sesion = sesionFactory.openSession();
+            Transaction tx = sesion.beginTransaction();
+            sesion.delete(prov);
+            tx.commit();
+        }catch(ObjectNotFoundException ex){
+            response.setCorrecto(false);
+            response.setMensajeError("No se ha encontrado el proveedor a eliminar");
+        }catch(ConstraintViolationException ex){
+            response.setCorrecto(false);
+            response.setMensajeError("No se ha podido eliminar el proveedor porque está registrado en 1 o más gestiones");
+        }
+        catch(Exception ex){
+            response.setCorrecto(false);
+            response.setMensajeError("Ha ocurrido un error al eliminar el proveedor");
+        }finally{
+            if(sesion != null && sesion.isOpen()){
+                sesion.close();
+            }
+        }
+        return response;
+    }
+    
     public static List<Proveedores> getAllProveedores(){
         Session sesion = null;
         try{

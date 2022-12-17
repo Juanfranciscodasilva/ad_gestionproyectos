@@ -247,6 +247,14 @@ public class Main {
         }
     }
     
+    public static Response eliminarProveedor(Proveedores prov){
+        try{
+            return BD_PROVEEDORES.eliminarProveedor(prov);
+        }catch(Exception ex){
+            return new Response(false,"Ha ocurrido un error al eliminar el proveedor");
+        }
+    }
+    
     public static List<Proveedores> buscarProveedores(String codigo, String nombre, String apellidos, String direccion){
         try{
             return BD_PROVEEDORES.buscarProveedores(codigo, nombre, apellidos, direccion);
@@ -271,6 +279,14 @@ public class Main {
         }
     }
     
+    public static Response eliminarPieza(Piezas pieza){
+        try{
+            return BD_PIEZAS.eliminarPieza(pieza);
+        }catch(Exception ex){
+            return new Response(false,"Ha ocurrido un error al eliminar la pieza");
+        }
+    }
+    
     public static List<Piezas> buscarPiezas(String codigo, String nombre, int precio){
         try{
             return BD_PIEZAS.buscarPiezas(codigo, nombre, precio);
@@ -292,6 +308,14 @@ public class Main {
             return BD_PROYECTOS.modificarProyecto(pro);
         }catch(Exception ex){
             return new Response(false,"Ha ocurrido un error al modificar el proyecto");
+        }
+    }
+    
+    public static Response eliminarProyecto(Proyectos pro){
+        try{
+            return BD_PROYECTOS.eliminarProyecto(pro);
+        }catch(Exception ex){
+            return new Response(false,"Ha ocurrido un error al eliminar el proyecto");
         }
     }
     

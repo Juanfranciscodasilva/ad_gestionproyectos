@@ -1,6 +1,7 @@
 package BBDD;
 
 import Clases.Piezas;
+import Clases.Proveedores;
 import Clases.Proyectos;
 import Clases.Response;
 import java.util.List;
@@ -52,6 +53,33 @@ public class BD_PROYECTOS {
         }catch(Exception ex){
             response.setCorrecto(false);
             response.setMensajeError("Ha ocurrido un error al modificar el proyecto");
+        }finally{
+            if(sesion != null && sesion.isOpen()){
+                sesion.close();
+            }
+        }
+        return response;
+    }
+    
+    public static Response eliminarProyecto(Proyectos pro){
+        Response response = new Response();
+        Session sesion = null;
+        try{
+            SessionFactory sesionFactory = HibernateUtil.getSessionFactory();
+            sesion = sesionFactory.openSession();
+            Transaction tx = sesion.beginTransaction();
+            sesion.delete(pro);
+            tx.commit();
+        }catch(ObjectNotFoundException ex){
+            response.setCorrecto(false);
+            response.setMensajeError("No se ha encontrado el proyecto a eliminar");
+        }catch(ConstraintViolationException ex){
+            response.setCorrecto(false);
+            response.setMensajeError("No se ha podido eliminar el proyecto porque está registrado en 1 o más gestiones");
+        }
+        catch(Exception ex){
+            response.setCorrecto(false);
+            response.setMensajeError("Ha ocurrido un error al eliminar el proyecto");
         }finally{
             if(sesion != null && sesion.isOpen()){
                 sesion.close();

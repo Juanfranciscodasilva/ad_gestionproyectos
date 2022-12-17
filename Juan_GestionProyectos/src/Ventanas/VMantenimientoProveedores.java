@@ -41,6 +41,7 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         bBuscar = new javax.swing.JButton();
         bLimpiarFiltro = new javax.swing.JButton();
+        ckBuscarSinFiltros = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -91,12 +92,14 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
             }
         });
 
+        ckBuscarSinFiltros.setText("Buscar todos si los filtros están vacíos.");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7)
@@ -104,8 +107,17 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tCodigoFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-                            .addComponent(tApellidosFiltro))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(tApellidosFiltro)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(ckBuscarSinFiltros, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(bBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(bLimpiarFiltro))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -114,13 +126,8 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tNombreFiltro)
-                            .addComponent(tDireccionFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(bBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
-                        .addComponent(bLimpiarFiltro)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tDireccionFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(31, 31, 31))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +147,8 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bLimpiarFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bLimpiarFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ckBuscarSinFiltros))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -255,7 +263,7 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(276, 276, 276)
                         .addComponent(bVolver)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(lEncontrados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -281,41 +289,21 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
     }//GEN-LAST:event_bVolverActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
-//        if(this.opcion==0){
-//            if(e.getListaEspectaculos() != null && !e.getListaEspectaculos().isEmpty()){
-//                JOptionPane.showMessageDialog(null, "Este empleado tiene espectáculos a cargo, reemplácelo antes de dar de baja.","", JOptionPane.WARNING_MESSAGE);
-//                return;
-//            }
-//            int eleccion = JOptionPane.showConfirmDialog(null, "Se va a dar de baja el empleado ¿Prefieres dar de baja eliminando completamente al empleado? ", "Dar de baja o eliminar completamente", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-//            if(eleccion == 0){
-//                Response respuesta = Main.eliminarEmpleado(e); 
-//                if(respuesta != null){
-//                    if(!respuesta.isCorrecto()){
-//                        JOptionPane.showMessageDialog(null, respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
-//                    }else{
-//                        JOptionPane.showMessageDialog(null, "Se ha eliminado el empleado correctamente.");
-//                        Main.cerrarVMEEmpleado();
-//                    }
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Vuelve a intentarlo.","", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }else if(eleccion == 1){
-//                e.setBaja(true);
-//                Response respuesta = Main.modificarEmpleado(e); 
-//                if(respuesta != null){
-//                    if(!respuesta.isCorrecto()){
-//                        JOptionPane.showMessageDialog(null,respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
-//                    }else{
-//                        JOptionPane.showMessageDialog(null, "Se ha dado de baja el empleado correctamente.");
-//                        Main.cerrarVMEEmpleado();
-//                    }
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Vuelve a intentarlo.","", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//        }else if(opcion==1){
-//            Main.abrirModificarEmpleado(e);
-//        }
+        if(this.p != null){
+            if(JOptionPane.showConfirmDialog(null,"Está seguro de querer eliminar el proveedor?")==0){
+                Response respuesta = Main.eliminarProveedor(p);
+                if(respuesta != null){
+                    if(!respuesta.isCorrecto()){
+                        JOptionPane.showMessageDialog(null,respuesta.getMensajeError(),"", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Se ha eliminado el proveedor correctamente.");
+                        Main.cerrarMantenimientoProveedor();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error inesperado. Vuelve a intentarlo.","", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_bEliminarActionPerformed
 
     private void cbCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCodigoActionPerformed
@@ -345,7 +333,8 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
         String nombre = tNombreFiltro.getText().trim();
         String apellidos = tApellidosFiltro.getText().trim();
         String direccion = tDireccionFiltro.getText().trim();
-        if(!codigo.isBlank() || !nombre.isBlank() || !apellidos.isBlank() || !direccion.isBlank()){
+        if((!codigo.isBlank() || !nombre.isBlank() || !apellidos.isBlank() || !direccion.isBlank()) || ckBuscarSinFiltros.isSelected()){
+            lEncontrados.setText("Buscando...");
             this.listaProveedores = Main.buscarProveedores(codigo,nombre,apellidos,direccion);
             if(listaProveedores == null){
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al buscar los proveedores.","",JOptionPane.ERROR_MESSAGE);
@@ -469,6 +458,7 @@ public class VMantenimientoProveedores extends javax.swing.JFrame {
     private javax.swing.JButton bModificar;
     private javax.swing.JButton bVolver;
     private javax.swing.JComboBox<String> cbCodigo;
+    private javax.swing.JCheckBox ckBuscarSinFiltros;
     private javax.swing.JLabel eTitulo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
